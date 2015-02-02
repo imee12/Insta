@@ -19,6 +19,7 @@ console.log('init styling');
 instaPage.getPhotosByTag("charleston");
 instaPage.getPhotosinParis();
 instaPage.getPhotosinStockholm();
+instaPage.getBeer();
 
 },
 
@@ -111,21 +112,37 @@ getPhotosinStockholm: function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
 memeConfig: {
   baseurl: 'http://version1.api.memegenerator.net/Generators',
 
 
 },
+
+
+getBeer: function () {
+  $.ajax({
+    url: 'http://beermapping.com/webservice/loccity/a4de7de6344a91b1c6702f215f623247/charleston,sc',
+    type: 'GET',
+    datatype: 'JSONP',
+    success: function (data) {
+      //console.log(instaPage.memeConfig.baseurl + "_Select_ByTrending";
+      console.log(data);
+      data.data.forEach(function(item, idx, arr) {
+
+  +          $('.beer').append('<p>' + name + '</p>');
+
+  });
+
+  },
+      error: function (error) {
+      console.log(error);
+    }
+  })
+},
+
+
+
+
 
 getMeme: function () {
   $.ajax({
