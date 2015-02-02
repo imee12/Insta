@@ -1,0 +1,27 @@
+section, aside {
+  display: inline-block;
+}
+
+header {
+  font-size: 65px;
+
+}
+
+section {
+  width: 170px,
+  images: 200px;
+}
+
+
+aside {
+  width: 500px;
+  border: 2px solid black line;
+}
+
+aside img {
+  display: inline-block;
+}
+section img {
+  width: 200px;
+
+}
