@@ -19,7 +19,7 @@ console.log('init styling');
 instaPage.getPhotosByTag("charleston");
 instaPage.getPhotosinParis();
 instaPage.getPhotosinStockholm();
-instaPage.getBeer();
+instaPage.getDrug();
 
 },
 
@@ -112,8 +112,8 @@ getPhotosinStockholm: function () {
 
 
 
-memeConfig: {
-  baseurl: 'http://version1.api.memegenerator.net/Generators',
+beerConfig: {
+  baseurl: 'http://api.brewerydb.com/v2/',
 
 
 },
@@ -121,7 +121,7 @@ memeConfig: {
 
 getBeer: function () {
   $.ajax({
-    url: 'http://beermapping.com/webservice/loccity/a4de7de6344a91b1c6702f215f623247/charleston,sc',
+    url: instaPage.beerConfig.baseurl + '/beer',
     type: 'GET',
     datatype: 'JSONP',
     success: function (data) {
@@ -129,7 +129,7 @@ getBeer: function () {
       console.log(data);
       data.data.forEach(function(item, idx, arr) {
 
-  +          $('.beer').append('<p>' + name + '</p>');
+           $('.beer').append('<p>' + name + '</p>');
 
   });
 
@@ -140,32 +140,33 @@ getBeer: function () {
   })
 },
 
+drugConfig: {
+  basurl: 'https://api.fda.gov/drug/event.json?search=',
+},
+getDrug: function () {
 
-
-
-
-getMeme: function () {
   $.ajax({
-    url: instaPage.memeConfig.baseurl + '_Select_ByTrending',
+    url: 'https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:%22nonsteroidal+anti-inflammatory+drug%22&count=patient.reaction.reactionmeddrapt.exact',
     type: 'GET',
     datatype: 'JSONP',
     success: function (data) {
       //console.log(instaPage.memeConfig.baseurl + "_Select_ByTrending";
       console.log(data);
-      data.data.forEach(function(item, idx, arr) {
-  +          $('section').append('<img src="' + instanceImageUrl + '">');
+      _.each(data, function(item, idx, arr) {
+        _.each(item, function (currentItem, idx, arry){
+          $('.drug').append('<p>' + currentItem.term + '</p>');
 
-  });
+        });
+
+
+
+});
 
   },
       error: function (error) {
       console.log(error);
     }
   })
-}
-
-
-
-
+},
 
 };

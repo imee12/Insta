@@ -13,7 +13,7 @@ section {
 }
 
 
-aside {
+article {
   width: 500px;
   border: 2px solid black line;
 }
@@ -23,5 +23,12 @@ aside img {
 }
 section img {
   width: 200px;
+
+}
+
+.drug {
+  width: 1000px;
+  height: 1000px;
+  border-color: red;
 
 }
