@@ -8,7 +8,7 @@ var instaPage = {
 
 init: function () {
   instaPage.initStyling ();
-//  instaPage.initEvents ();
+  instaPage.initEvents ();
 
 
 
@@ -16,28 +16,19 @@ init: function () {
 
 initStyling: function () {
 console.log('init styling');
-instaPage.getPhotosByTag("charleston");
-instaPage.getPhotosinParis();
-instaPage.getPhotosinStockholm();
+//instaPage.getPhotosByTag("charleston");
+//instaPage.getPhotosinParis();
+//instaPage.getPhotosinStockholm();
 instaPage.getDrug();
+instaPage.getEtsy();
+instaPage.getMeme();
 
 },
 
 initEvents: function (){
 console.log('init events');
 
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "http://localhost");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Origin', "*")
 
-
-};
-
-app.configure(function() {
-    app.use(allowCrossDomain);
-});
 
 
 
@@ -60,7 +51,7 @@ getPhotosByTag: function (term) {
     console.log(instaPage.config.baseUrl + 'tags/' + term + '/media/recent?client_id=' + instaPage.config.clientId);
     console.log(data);
     data.data.forEach(function(item, idx, arr) {
-+          $('section').append('<img src="' + item.images.standard_resolution.url + '">');
+          $('section').append('<img src="' + item.images.standard_resolution.url + '">');
 
 });
 
@@ -110,39 +101,6 @@ getPhotosinStockholm: function () {
 
 
 
-
-
-beerConfig: {
-  baseurl: 'http://api.brewerydb.com/v2/',
-
-
-},
-
-
-getBeer: function () {
-  $.ajax({
-    url: instaPage.beerConfig.baseurl + '/beer',
-    type: 'GET',
-    datatype: 'JSONP',
-    success: function (data) {
-      //console.log(instaPage.memeConfig.baseurl + "_Select_ByTrending";
-      console.log(data);
-      data.data.forEach(function(item, idx, arr) {
-
-           $('.beer').append('<p>' + name + '</p>');
-
-  });
-
-  },
-      error: function (error) {
-      console.log(error);
-    }
-  })
-},
-
-drugConfig: {
-  basurl: 'https://api.fda.gov/drug/event.json?search=',
-},
 getDrug: function () {
 
   $.ajax({
@@ -150,7 +108,7 @@ getDrug: function () {
     type: 'GET',
     datatype: 'JSONP',
     success: function (data) {
-      //console.log(instaPage.memeConfig.baseurl + "_Select_ByTrending";
+
       console.log(data);
       _.each(data, function(item, idx, arr) {
         _.each(item, function (currentItem, idx, arry){
@@ -158,15 +116,76 @@ getDrug: function () {
 
         });
 
-
-
 });
+},
 
+      error: function (error) {
+      console.log(error);
+    }
+})
+
+},
+
+
+
+getEtsy: function () {
+  $.ajax({
+    url: 'https://openapi.etsy.com/v2/listings/active?api_key=ifoluwur9fetbg8e4nc8ovxt',
+    type: 'GET',
+    datatype: 'JSONP',
+    success: function (data) {
+      _.each(data, function(item, index, array){
+      _.each(item, function( currentItem, index, array){
+            $('.etsy').append('<p>' + currentItem.title + '</p>');
+            $('.etsy').append('<p>' + currentItem.description + '</p>');
+          //  $('article').append('<img src="' + currentItem.url + '">');
+
+
+      });
+  });
+},
+
+error: function (error) {
+console.log(error);
+}
+
+})
+
+},
+
+
+
+memeConfig: {
+ baseurl: 'http://version1.api.memegenerator.net/Generators',
+
+
+},
+
+getMeme: function () {
+  $.ajax({
+    url: instaPage.memeConfig.baseurl + '_Select_ByTrending',
+    type: 'GET',
+    datatype: 'JSONP',
+   success: function (data) {
+      //console.log(instaPage.memeConfig.baseurl + "_Select_ByTrending";
+      console.log(data);
+      _.each(data, function(item, idx, arr) {
+        _.each(item, function (currentItem, index, array) {
+          //$('footer').append('<img src="' + currentItem.imageUrl + '">');
+          $('footer').append('<p>' + currentItem.urlName + '</p>')
+  });
+});
   },
       error: function (error) {
       console.log(error);
     }
   })
-},
+}
+
+
+
+
+
+
 
 };
