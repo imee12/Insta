@@ -22,6 +22,7 @@ console.log('init styling');
 instaPage.getDrug();
 instaPage.getEtsy();
 instaPage.getMeme();
+instaPage.getBeer();
 
 },
 
@@ -112,7 +113,7 @@ getDrug: function () {
       console.log(data);
       _.each(data, function(item, idx, arr) {
         _.each(item, function (currentItem, idx, arry){
-          $('.drug').append('<p>' + currentItem.term + '</p>');
+          $('.beer').append('<p>' + currentItem.term + '</p>');
 
         });
 
@@ -180,7 +181,33 @@ getMeme: function () {
       console.log(error);
     }
   })
+},
+
+getBeer: function () {
+ $.ajax({
+    url: 'http://beermapping.com/webservice/loccity/a4de7de6344a91b1c6702f215f623247/charleston,sc',
+    type: 'GET',
+    datatype: 'JSONP',
+    success: function (data) {
+      //console.log(instaPage.memeConfig.baseurl + "_Select_ByTrending";
+      console.log(data);
+      _.each(data, function(item, idx, arr) {
+        //_.each(item, function (currentItem, index, array) {
+            $('.beer').append('<p>' + item.name + '</p>');
+//  });
+});
+  },
+      error: function (error) {
+      console.log(error);
+    }
+  })
 }
+
+
+
+
+
+
 
 
 
